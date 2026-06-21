@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Library Management System</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f4f4f4;
+padding:20px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+h1{
+text-align:center;
+margin-bottom:20px;
+}
+
+.counter{
+text-align:center;
+font-size:18px;
+font-weight:bold;
+margin-bottom:15px;
+color:#333;
+}
+
+.form{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.form input{
+padding:10px;
+flex:1;
+min-width:180px;
+}
+
+.form button{
+padding:10px 20px;
+cursor:pointer;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:10px;
+text-align:center;
+}
+
+th{
+background:#f0f0f0;
+}
+
+.delete-btn{
+background:red;
+color:white;
+border:none;
+padding:6px 12px;
+cursor:pointer;
+border-radius:4px;
+}
+
+.delete-btn:hover{
+opacity:0.8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Library Management System</h1>
+
+<div class="counter">
+Total Books: <span id="bookCount">0</span>
+</div>
+
+<div class="form">
+<input type="text" id="bookName" placeholder="Book Name">
+<input type="text" id="authorName" placeholder="Author Name">
+<input type="text" id="bookId" placeholder="Book ID">
+<button onclick="addBook()">Add Book</button>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>Book Name</th>
+<th>Author</th>
+<th>Book ID</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="bookList">
+</tbody>
+
+</table>
+
+</div>
+
+<script>
+
+function updateCount(){
+document.getElementById("bookCount").textContent =
+document.querySelectorAll("#bookList tr").length;
+}
+
+function addBook(){
+
+const bookName=document.getElementById("bookName").value.trim();
+const authorName=document.getElementById("authorName").value.trim();
+const bookId=document.getElementById("bookId").value.trim();
+
+if(bookName==="" || authorName==="" || bookId===""){
+alert("Please fill all fields");
+return;
+}
+
+const row=document.createElement("tr");
+
+row.innerHTML=`
+<td>${bookName}</td>
+<td>${authorName}</td>
+<td>${bookId}</td>
+<td>
+<button class="delete-btn" onclick="deleteBook(this)">
+Delete
+</button>
+</td>
+`;
+
+document.getElementById("bookList").appendChild(row);
+
+document.getElementById("bookName").value="";
+document.getElementById("authorName").value="";
+document.getElementById("bookId").value="";
+
+updateCount();
+}
+
+function deleteBook(button){
+button.parentElement.parentElement.remove();
+updateCount();
+}
+
+</script>
+
+</body>
+</html>
